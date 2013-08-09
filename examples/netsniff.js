@@ -95,7 +95,6 @@ function createHAR(address, title, startTime, resources)
 
 var webpage = require('webpage'),
     page = webpage.create(),
-    pageAuth = webpage.create();
     system = require('system');
 
 if (system.args.length === 1) {
@@ -103,14 +102,17 @@ if (system.args.length === 1) {
     phantom.exit(1);
 } else {
 	
-    pageAuth.address = system.args[2];
-    pageAuth.resources = [];
-    pageAuth.open(pageAuth.address, function (status) {
-        if (status !== 'success') {
-            console.log('FAIL to load the auth address');
-            phantom.exit(1);
-        }
-    });
+	if(system.args === 3) {
+		var pageAuth = webpage.create();
+	    pageAuth.address = system.args[2];
+	    pageAuth.resources = [];
+	    pageAuth.open(pageAuth.address, function (status) {
+	        if (status !== 'success') {
+	            console.log('FAIL to load the auth address');
+	            phantom.exit(1);
+	        }
+	    });
+	}
 
     page.address = system.args[1];
     page.resources = [];
