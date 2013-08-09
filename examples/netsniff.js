@@ -95,7 +95,7 @@ function createHAR(address, title, startTime, resources)
 
 var webpage = require('webpage'),
     page = webpage.create(),
-    pageAuth = page = webpage.create();
+    pageAuth = webpage.create();
     system = require('system');
 
 if (system.args.length === 1) {
