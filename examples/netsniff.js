@@ -101,6 +101,15 @@ if (system.args.length === 1) {
     phantom.exit(1);
 } else {
 
+    page.address = system.args[2];
+    page.open(page.address, function (status) {
+        var har;
+        if (status !== 'success') {
+            console.log('FAIL to load the address');
+            phantom.exit(1);
+        }
+    });
+
     page.address = system.args[1];
     page.resources = [];
 
