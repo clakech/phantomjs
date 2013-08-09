@@ -1,23 +1,36 @@
-var page = require('webpage').create(),
+var webpage = require('webpage'),
+    page = webpage.create(),
+    pageAuth = webpage.create(),
     system = require('system'),
     t, address;
 
 if (system.args.length === 1) {
-    console.log('Usage: loadspeed.js <some URL>');
+    console.log('Usage: loadspeed.js <some URL> <auth URL>');
     phantom.exit(1);
 } else {
-    t = Date.now();
-    address = system.args[1];
-    page.open(address, function (status) {
-        if (status !== 'success') {
-            console.log('FAIL to load the address');
-        } else {
-            t = Date.now() - t;
-            console.log('Page title is ' + page.evaluate(function () {
-                return document.title;
-            }));
-            console.log('Loading time ' + t + ' msec');
-        }
-        phantom.exit();
-    });
+    if(system.args === 3) {
+	    pageAuth.address = system.args[2];
+	    pageAuth.open(pageAuth.address, function (status) {
+	        if (status !== 'success') {
+	            console.log('FAIL to load the auth address');
+	            phantom.exit(1);
+	        }
+            
+            t = Date.now();
+            address = system.args[1];
+            page.open(address, function (status) {
+                if (status !== 'success') {
+                    console.log('FAIL to load the address');
+                } else {
+                    t = Date.now() - t;
+                    console.log('Page title is ' + page.evaluate(function () {
+                        return document.title;
+                    }));
+                    console.log('Loading time ' + t + ' msec');
+                }
+                phantom.exit();
+            });
+	    });
+	}
+    
 }
