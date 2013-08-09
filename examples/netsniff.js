@@ -104,8 +104,8 @@ if (system.args.length === 1) {
 } else {
 	
     pageAuth.address = system.args[2];
+    pageAuth.resources = [];
     pageAuth.open(pageAuth.address, function (status) {
-        var har;
         if (status !== 'success') {
             console.log('FAIL to load the auth address');
             phantom.exit(1);
