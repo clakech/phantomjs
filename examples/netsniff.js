@@ -93,19 +93,21 @@ function createHAR(address, title, startTime, resources)
     };
 }
 
-var page = require('webpage').create(),
+var webpage = require('webpage'),
+    page = webpage.create(),
+    pageAuth = page = webpage.create();
     system = require('system');
 
 if (system.args.length === 1) {
     console.log('Usage: netsniff.js <some URL>');
     phantom.exit(1);
 } else {
-
-    page.address = system.args[2];
-    page.open(page.address, function (status) {
+	
+    pageAuth.address = system.args[2];
+    pageAuth.open(pageAuth.address, function (status) {
         var har;
         if (status !== 'success') {
-            console.log('FAIL to load the address');
+            console.log('FAIL to load the auth address');
             phantom.exit(1);
         }
     });
